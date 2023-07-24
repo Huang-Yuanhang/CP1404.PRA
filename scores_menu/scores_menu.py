@@ -1,57 +1,81 @@
-import score
+MINIMUM_SCORE = 0
+MAXIMUM_SCORE = 100
+EXCELLENT_SCORE = 90
+PASSABLE_SCORE = 50
 
 
-def get_valid_scores():
+def get_score_result(score):
+    if score < MINIMUM_SCORE or score > MAXIMUM_SCORE:
+        return "Invalid score"
+    elif score >= EXCELLENT_SCORE:
+        return "Excellent"
+    elif score >= PASSABLE_SCORE:
+        return "Passable"
+    else:
+        return "Bad"
+
+
+def get_valid_score_input():
     while True:
-        try:
-            scores = float(input("Enter your score (0-100): "))
-            if 0 <= scores <= 100:
-                return scores
+        user_input = input("Enter your score (0-100 inclusive): ")
+        if user_input.isdigit():
+            user_score = float(user_input)
+            if MINIMUM_SCORE <= user_score <= MAXIMUM_SCORE:
+                return user_score
             else:
-                print("Score must be between 0 and 100. Please try again.")
-        except ValueError:
-            print("Invalid input. Please enter a valid score (0-100).")
+                print(f"Score should be between {MINIMUM_SCORE} and {MAXIMUM_SCORE}. Please try again.")
+        else:
+            print("Invalid input. Please enter a valid number.")
 
 
-def print_stars(scores):
-    print("Stars: " + "*" * int(scores))
+def print_result(score):
+    result = get_score_result(score)
+    print(f"Result: {result}")
+
+
+def show_stars(score):
+    stars = "*" * int(score)
+    print(stars)
+
+
+def get_user_choice():
+    return input(">>> ").upper()
+
+
+def handle_user_choice(choice, score):
+    if score is None:
+        print("Please enter a valid score first.")
+        return None
+
+    if choice == "G":
+        score = get_valid_score_input()
+        return score
+    elif choice == "P":
+        print_result(score)
+    elif choice == "S":
+        show_stars(score)
+    elif choice == "Q":
+        print("Thank you for using the Score Program. Goodbye!")
+        exit()
+    else:
+        print("Invalid option. Please choose again.")
+    return score
 
 
 def main():
-    user_score = None
+    score = None  # Initialize the score to None
+    print("Welcome to the Score Program!")
+
     while True:
-        print("\n====== Main Menu ======")
-        print("(G)et valid score")
+        print("\nMain Menu:")
+        print("(G)et a valid score")
         print("(P)rint result")
         print("(S)how stars")
         print("(Q)uit")
 
-        choice = input("Please select a menu option (enter the first letter): ").strip().lower()
-
-        if choice == 'g':
-            user_score = get_valid_scores()
-        elif choice == 'p':
-            try:
-                if user_score is not None:
-                    result = score.get_score_result(user_score)
-                    print("Your Result:", result)
-                else:
-                    print("You haven't entered a valid score yet. Please choose (G)et valid score to enter your score.")
-            except NameError:
-                print("You haven't entered a valid score yet. Please choose (G)et valid score to enter your score.")
-        elif choice == 's':
-            try:
-                if user_score is not None:
-                    print_stars(user_score)
-                else:
-                    print("You haven't entered a valid score yet. Please choose (G)et valid score to enter your score.")
-            except NameError:
-                print("You haven't entered a valid score yet. Please choose (G)et valid score to enter your score.")
-        elif choice == 'q':
-            print("Thank you for using the program. Goodbye!")
-            break
-        else:
-            print("Invalid option. Please try again.")
+        choice = get_user_choice()
+        score = handle_user_choice(choice, score)
 
 
 main()
+

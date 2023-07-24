@@ -1,7 +1,14 @@
+import random
+
 MINIMUM_SCORE = 0
 MAXIMUM_SCORE = 100
 EXCELLENT_SCORE = 90
 PASSABLE_SCORE = 50
+menu = "\nMain Menu:" \
+       "\n(G)et a valid score" \
+       "\n(P)rint result" \
+       "\n(S)how stars " \
+       "\n(Q)uit"
 
 
 def get_score_result(score):
@@ -38,44 +45,33 @@ def show_stars(score):
     print(stars)
 
 
-def get_user_choice():
-    return input(">>> ").upper()
-
-
-def handle_user_choice(choice, score):
-    if score is None:
-        print("Please enter a valid score first.")
-        return None
-
-    if choice == "G":
-        score = get_valid_score_input()
-        return score
-    elif choice == "P":
-        print_result(score)
-    elif choice == "S":
-        show_stars(score)
-    elif choice == "Q":
-        print("Thank you for using the Score Program. Goodbye!")
-        exit()
-    else:
-        print("Invalid option. Please choose again.")
-    return score
+def random_score():
+    return random.randint(MINIMUM_SCORE, MAXIMUM_SCORE)
 
 
 def main():
-    score = None  # Initialize the score to None
     print("Welcome to the Score Program!")
+    score = 0  
+    print(menu)
+    choice = input(">>> ").upper()
+    while choice != "Q":
+        if choice == "G":
+            score = get_valid_score_input()  #
+        elif choice == "P":
+            print(score)
+            print_result(score)
 
-    while True:
-        print("\nMain Menu:")
-        print("(G)et a valid score")
-        print("(P)rint result")
-        print("(S)how stars")
-        print("(Q)uit")
-
-        choice = get_user_choice()
-        score = handle_user_choice(choice, score)
+            random_score_value = random_score()
+            result = get_score_result(random_score_value)
+            print(f"Random Score: {random_score_value} - Result: {result}")
+        elif choice == "S":
+            show_stars(score)
+        else:
+            print("Invalid option. Please choose again.")
+        print(menu)
+        choice = input(">>> ").upper()
 
 
 main()
+
 

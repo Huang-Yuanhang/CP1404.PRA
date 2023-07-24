@@ -25,13 +25,13 @@ def get_score_result(score):
 def get_valid_score_input():
     while True:
         user_input = input("Enter your score (0-100 inclusive): ")
-        if user_input.isdigit():
+        try:
             user_score = float(user_input)
             if MINIMUM_SCORE <= user_score <= MAXIMUM_SCORE:
                 return user_score
             else:
                 print(f"Score should be between {MINIMUM_SCORE} and {MAXIMUM_SCORE}. Please try again.")
-        else:
+        except ValueError:
             print("Invalid input. Please enter a valid number.")
 
 
@@ -51,12 +51,12 @@ def random_score():
 
 def main():
     print("Welcome to the Score Program!")
-    score = 0  
+    score = 0
     print(menu)
     choice = input(">>> ").upper()
     while choice != "Q":
         if choice == "G":
-            score = get_valid_score_input()  #
+            score = get_valid_score_input()
         elif choice == "P":
             print(score)
             print_result(score)
@@ -73,5 +73,3 @@ def main():
 
 
 main()
-
-

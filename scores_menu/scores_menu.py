@@ -23,16 +23,11 @@ def get_score_result(score):
 
 
 def get_valid_score_input():
-    while True:
-        user_input = input("Enter your score (0-100 inclusive): ")
-        try:
-            user_score = float(user_input)
-            if MINIMUM_SCORE <= user_score <= MAXIMUM_SCORE:
-                return user_score
-            else:
-                print(f"Score should be between {MINIMUM_SCORE} and {MAXIMUM_SCORE}. Please try again.")
-        except ValueError:
-            print("Invalid input. Please enter a valid number.")
+    user_input = float(input("Enter your score (0-100 inclusive): "))
+    while user_input < MINIMUM_SCORE or user_input > MAXIMUM_SCORE:
+        print("Invalid number! ")
+        user_input = float(input("Enter your score (0-100 inclusive): "))
+    return int(user_input)
 
 
 def print_result(score):
@@ -68,8 +63,10 @@ def main():
             show_stars(score)
         else:
             print("Invalid option. Please choose again.")
+
         print(menu)
         choice = input(">>> ").upper()
 
 
 main()
+

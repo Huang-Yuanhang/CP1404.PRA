@@ -11,7 +11,7 @@ def get_password():
 
 
 def print_asterisks(password):
-    print(".Pythonista " + "*" * (len(password)))
+    print("Pythonista " + "*" * (len(password)))
 
 
 def main():
